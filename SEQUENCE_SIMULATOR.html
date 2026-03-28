@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MORPHERS — Sequence Simulator</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    @font-face {
+      font-family: 'alien-alphabet';
+    /*src: url('https://cdn.jsdelivr.net/gh/MetalMorphers/RETRO-MECHA@main/alien-alphabet.woff') format('woff');*/
+      src: url(data:application/font-woff;charset=utf-8;base64,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) format(woff);
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      background: #111111;
+      color: #cfcfcf;
+      font-family: 'Silkscreen', monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: clamp(0.8rem, 2vmin, 1.1rem);
+      letter-spacing: 0.3em;
+      color: #fff;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .subtitle {
+      font-size: clamp(0.4rem, 0.95vmin, 0.55rem);
+      letter-spacing: 0.25em;
+      color: #555;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      padding: 30px;
+      width: 100%;
+      max-width: 480px;
+    }
+
+    .field {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: clamp(0.4rem, 0.95vmin, 0.55rem);
+      letter-spacing: 0.25em;
+      color: #555;
+      margin-bottom: 8px;
+    }
+
+    .input-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .prefix {
+      font-size: clamp(0.55rem, 1.3vmin, 0.75rem);
+      color: #444;
+      flex-shrink: 0;
+    }
+
+    input {
+      background: #111;
+      border: 1px solid #333;
+      color: #fff;
+      font-family: 'Silkscreen', monospace;
+      font-size: clamp(0.55rem, 1.3vmin, 0.75rem);
+      padding: 10px 14px;
+      width: 100%;
+      letter-spacing: 0.15em;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus {
+      border-color: #555;
+    }
+
+    /* Color preview pour DNA */
+    .color-preview {
+      width: 24px;
+      height: 24px;
+      border: 1px solid #333;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      color: #cfcfcf;
+      font-family: 'Silkscreen', monospace;
+      font-size: clamp(0.5rem, 1.2vmin, 0.7rem);
+      letter-spacing: 0.3em;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+      margin-top: 10px;
+    }
+
+    .btn:hover {
+      border-color: #555;
+      color: #fff;
+    }
+
+    /* Résultat */
+    .result {
+      margin-top: 30px;
+      padding-top: 24px;
+      border-top: 1px solid #222;
+      display: none;
+    }
+
+    .result.visible {
+      display: block;
+    }
+
+    .result-label {
+      font-size: clamp(0.45rem, 1.1vmin, 0.65rem);
+      color: #444;
+      letter-spacing: 0.25em;
+      margin-bottom: 16px;
+    }
+
+    .sequence-display {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .glyph-box {
+      width: clamp(50px, 12vmin, 70px);
+      height: clamp(50px, 12vmin, 70px);
+      border: 1px solid var(--dna, #333);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(1.2rem, 3vmin, 1.8rem);
+      color: #fff;
+      position: relative;
+      box-shadow: 0 0 10px var(--dna, #333);
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 8px var(--dna, #333); }
+      50%       { box-shadow: 0 0 20px var(--dna, #333); }
+    }
+
+    .glyph-char {
+      font-family: 'alien-alphabet', monospace;
+      font-size: clamp(1.2rem, 3vmin, 1.8rem);
+      text-shadow: 0 3px 0 #000000, 0 5px 0 #00000055;
+      position: absolute; /* ← absolute comme les numéros */
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%); /* ← centrage parfait */
+      line-height: 1;
+    } 
+
+    .glyph-index {
+      position: absolute;
+      top: 4px;
+      right: 5px;
+      font-size: 0.45rem;
+      color: #444;
+      font-family: 'Silkscreen', monospace; /* ← garde la font normale */
+      letter-spacing: 0;
+    }
+
+    .result-info {
+      font-size: clamp(0.55rem, 1.3vmin, 0.75rem);
+      color: #444;
+      letter-spacing: 0.15em;
+      line-height: 2.2;
+    }
+
+    .result-info span {
+      color: var(--dna, #60bc56);
+    }
+
+    /* Batch mode */
+    .divider {
+      border: none;
+      border-top: 1px solid #1e1e1e;
+      margin: 30px 0;
+    }
+
+    .batch-title {
+      font-size: clamp(0.45rem, 1.1vmin, 0.65rem);
+      color: #444;
+      letter-spacing: 0.25em;
+      margin-bottom: 16px;
+    }
+
+    .batch-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: clamp(0.55rem, 1.3vmin, 0.75rem);
+    }
+
+    .batch-table th {
+      color: #333;
+      letter-spacing: 0.2em;
+      padding: 6px 8px;
+      text-align: left;
+      border-bottom: 1px solid #1e1e1e;
+    }
+
+    .batch-table td {
+      padding: 7px 8px;
+      border-bottom: 1px solid #1a1a1a;
+      letter-spacing: 0.1em;
+    }
+
+    .batch-table td:last-child {
+      color: #60bc56;
+    }
+
+    .dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 0;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+
+    .error-msg {
+      font-size: clamp(0.55rem, 1.3vmin, 0.75rem);
+      color: #c23b3b;
+      letter-spacing: 0.15em;
+      margin-top: 10px;
+      display: none;
+    }
+    .error-msg.visible { display: block; }
+  </style>
+</head>
+<body>
+
+<h1>▣ SEQUENCE SIMULATOR ▣</h1>
+<p class="subtitle">MORPHERS — ORDINALS TEST TOOL</p>
+
+<div class="card">
+
+  <!-- ══ SIMULATEUR UNIQUE ══ -->
+  <div class="field">
+    <label>MORPHER ID</label>
+    <div class="input-row">
+      <span class="prefix">#</span>
+      <input type="text" id="input-id" placeholder="001" maxlength="3" value="001">
+    </div>
+  </div>
+
+  <div class="field">
+    <label>DNA COLOR (HEX)</label>
+    <div class="input-row">
+      <span class="prefix">#</span>
+      <input type="text" id="input-dna" placeholder="2d2d95" maxlength="6" value="2d2d95">
+      <div class="color-preview" id="color-preview" style="background:#2d2d95;"></div>
+    </div>
+  </div>
+
+  <p class="error-msg" id="error-msg">⚠ DNA invalide — utilise uniquement 0-9 et a-f</p>
+
+  <button class="btn" onclick="simulate()">▶ GENERATE SEQUENCE</button>
+
+  <!-- ══ RÉSULTAT ══ -->
+  <div class="result" id="result">
+    <p class="result-label">GENERATED SEQUENCE</p>
+    <div class="sequence-display" id="sequence-display"></div>
+    <div class="result-info" id="result-info"></div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ══ BATCH : TOUS LES MORPHERS ══ -->
+  <p class="batch-title">BATCH — PREVIEW ALL 10 TEST MORPHERS</p>
+  <table class="batch-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>DNA</th>
+        <th>SEQUENCE</th>
+      </tr>
+    </thead>
+    <tbody id="batch-tbody"></tbody>
+  </table>
+
+</div>
+
+<script>
+/* ──────────────────────────────────────────────────────────
+   ALGO generateSequence — identique à MORPHERS_DATA.js
+   ────────────────────────────────────────────────────────── */
+function generateSequence(id, dna) {
+  var chars = '0123456789abcdefghijklmnopqrstuvwxyz'.split('');
+  var idNum  = parseInt(id.replace('#', ''), 10);
+  var dnaNum = parseInt(dna.replace('#', ''), 16);
+  var seed   = (idNum * 31 + dnaNum) % 99999;
+  var seq    = [];
+  while (seq.length < 3) {
+    seed = (seed * 1664525 + 1013904223) % 4294967296;
+    var c = chars[seed % chars.length];
+    if (seq.indexOf(c) === -1) seq.push(c);
+  }
+  return seq;
+}
+
+/* ──────────────────────────────────────────────────────────
+   Validation HEX
+   ────────────────────────────────────────────────────────── */
+function isValidHex(str) {
+  return /^[0-9a-fA-F]{6}$/.test(str);
+}
+
+/* ──────────────────────────────────────────────────────────
+   Live preview couleur DNA
+   ────────────────────────────────────────────────────────── */
+document.getElementById('input-dna').addEventListener('input', function() {
+  var val = this.value.trim();
+  if (isValidHex(val)) {
+    document.getElementById('color-preview').style.background = '#' + val;
+    document.getElementById('error-msg').classList.remove('visible');
+  }
+});
+
+/* ──────────────────────────────────────────────────────────
+   Simulateur unique
+   ────────────────────────────────────────────────────────── */
+function simulate() {
+  var idRaw  = document.getElementById('input-id').value.trim().padStart(3, '0');
+  var dnaRaw = document.getElementById('input-dna').value.trim().toLowerCase();
+  var errEl  = document.getElementById('error-msg');
+
+  if (!isValidHex(dnaRaw)) {
+    errEl.classList.add('visible');
+    return;
+  }
+  errEl.classList.remove('visible');
+
+  var mid = '#' + idRaw;
+  var dna = '#' + dnaRaw;
+  var seq = generateSequence(mid, dna);
+
+  // Afficher résultat
+  var display = document.getElementById('sequence-display');
+  display.innerHTML = '';
+  display.style.setProperty('--dna', dna);
+
+  seq.forEach(function(char, i) {
+    var box = document.createElement('div');
+    box.className = 'glyph-box';
+    box.style.setProperty('--dna', dna);
+    box.innerHTML = '<span class="glyph-char">' + char + '</span><span class="glyph-index">' + (i+1) + '</span>';
+    display.appendChild(box);
+  });
+
+  // Info
+  document.getElementById('result-info').innerHTML =
+    'ID &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ <span>' + mid + '</span><br>' +
+    'DNA &nbsp;&nbsp;&nbsp;&nbsp;→ <span>' + dna + '</span><br>' +
+    'SEED &nbsp;&nbsp;&nbsp;→ <span>' + ((parseInt(idRaw,10)*31 + parseInt(dnaRaw,16)) % 99999) + '</span><br>' +
+    'SEQUENCE → <span>[' + seq.map(function(c){return "'" + c + "'"}).join(', ') + ']</span><br>' +
+    'splitUp &nbsp;→ <span>"' + seq.join(' ') + '"</span>';
+
+  document.getElementById('result').classList.add('visible');
+}
+
+/* ──────────────────────────────────────────────────────────
+   Batch — 10 Morphers de test
+   ────────────────────────────────────────────────────────── */
+var BATCH = [
+  { id: '#001', dna: '#2d2d95' },
+  { id: '#002', dna: '#60bc56' },
+  { id: '#003', dna: '#a83200' },
+  { id: '#004', dna: '#d4af37' },
+  { id: '#005', dna: '#1a7abf' },
+  { id: '#006', dna: '#9b1b30' },
+  { id: '#007', dna: '#2e8b57' },
+  { id: '#008', dna: '#ff6600' },
+  { id: '#009', dna: '#7b2d8b' },
+  { id: '#010', dna: '#00ced1' },
+];
+
+var tbody = document.getElementById('batch-tbody');
+BATCH.forEach(function(m) {
+  var seq = generateSequence(m.id, m.dna);
+  var tr = document.createElement('tr');
+  tr.innerHTML =
+    '<td>' + m.id + '</td>' +
+    '<td><span class="dot" style="background:' + m.dna + '"></span>' + m.dna + '</td>' +
+    '<td>[' + seq.join(', ') + ']</td>';
+  tbody.appendChild(tr);
+});
+
+/* Enter pour simuler */
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') simulate();
+});
+</script>
+
+</body>
+</html>
