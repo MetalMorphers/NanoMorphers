@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  MORPHER_008.html
+  Fichier Morpher #008 — À minter sur Bitcoin Ordinals
+  Taille ultra légère ~2kb
+  
+  Ordre de chargement IMPORTANT :
+  1. Ce fichier définit window.MORPHER_ID = '#008'
+  2. MORPHERS_DATA.js charge les données + algo (INSCRIPTION_ID_B)
+  3. MORPHERS_ENGINE.html charge le code complet (INSCRIPTION_ID_A)
+  ============================================================
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MORPHER #008</title>
+</head>
+<body>
+
+<script>
+  // ⚙️ ÉTAPE 1 — Définir l'identité de ce Morpher
+  // C'est la seule ligne qui change d'un fichier à l'autre
+  window.MORPHER_ID = '#008';
+</script>
+
+<!-- ⚙️ ÉTAPE 2 — Charger les données + algo de séquence EN PREMIER -->
+<!-- Remplacer INSCRIPTION_ID_B par le vrai ID d'inscription de MORPHERS_DATA.js -->
+<script src="./MORPHERS_DATA.js"></script>
+
+<!-- ⚙️ ÉTAPE 3 — Charger le moteur complet EN SECOND -->
+<!-- Remplacer INSCRIPTION_ID_A par le vrai ID d'inscription de MORPHERS_ENGINE.html -->
+<script src="./MORPHERS_ENGINE.js"></script>
+
+</body>
+</html>
